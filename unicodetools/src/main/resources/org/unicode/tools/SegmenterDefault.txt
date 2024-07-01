@@ -242,13 +242,9 @@ $AL=($AL | ^ $CM | (?<=$Spec1_) $CM)
 12.2) $Spec3b_ $CM+ × $GL
 12.3) ^ $CM+ × $GL
 # LB 13  Do not break before \u2018]\u2019 or \u2018!\u2019 or \u2018;\u2019 or \u2018/\u2019, even after spaces.
-# Using customization 7.
 13.01) × $EX
-13.02) $Spec4_ × ($CL | $CP | $IS | $SY)
-13.03) $Spec4_ $CM+ ×  ($CL | $CP | $IS | $SY)
-13.04) ^ $CM+ ×  ($CL | $CP | $IS | $SY)
-##	13.03) $Spec4_ × $IS
-##	13.04) $Spec4_ × $SY
+13.02) [^ $CM] × ($CL | $CP | $IS | $SY)
+13.03) × ($CL | $CP | $IS | $SY)
 #LB 14  Do not break after \u2018[\u2019, even after spaces.
 14) $OP $SP* ×
 # LB 15a Do not break after an unresolved initial punctuation that lies at the start of the line,
@@ -297,14 +293,21 @@ $AL=($AL | ^ $CM | (?<=$Spec1_) $CM)
 # LB24 Do not break between numeric prefix/postfix and letters, or between letters and prefix/postfix.
 24.02) ($PR | $PO) × ($AL | $HL)
 24.03) ($AL | $HL) × ($PR | $PO)
-# Using customization 7
-# LB Alternative: ( PR | PO) ? ( OP | HY ) ? NU (NU | SY | IS) * (CL | CP) ? ( PR | PO) ?
-# Insert × every place it could go. However, make sure that at least one thing is concrete, otherwise would cause $NU to not break before or after 
-25.01) ($PR | $PO) × ( $OP | $HY )? $NU
-25.02) ( $OP | $HY ) × $NU
-25.03) $NU × ($NU | $SY | $IS)
-25.04) $NU ($NU | $SY | $IS)* × ($NU | $SY | $IS | $CL | $CP)
-25.05) $NU ($NU | $SY | $IS)* ($CL | $CP)? × ($PO | $PR)
+# LB 25
+25.01) $CL × $PO
+25.02) $CP × $PO
+25.03) $CL × $PR
+25.04) $CP × $PR
+25.05) $NU × $PO
+25.06) $NU × $PR
+25.07) $PO × $OP
+25.08) $PO × $NU
+25.09) $PR × $OP
+25.10) $PR × $NU
+25.11) $HY × $NU
+25.12) $IS × $NU
+25.13) $NU × $NU
+25.14) $SY × $NU
 #LB 26 Do not break a Korean syllable.
 26.01) $JL  × $JL | $JV | $H2 | $H3
 26.02) $JV | $H2 × $JV | $JT
